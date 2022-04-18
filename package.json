@@ -1,0 +1,13 @@
+{
+  "name": "hubriseconnector",
+  "version": "1.0.0",
+  "description": "This project uses Quarkus, the Supersonic Subatomic Java Framework.",
+  "main": "index.js",
+  "scripts": {
+    "startQuarkus": "cd hubriseQuarkus && quarkus dev",
+    "connectHubriseBrowser": "lt -p 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

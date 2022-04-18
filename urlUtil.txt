@@ -1,0 +1,1 @@
+https://manager.hubrise.com/oauth2/v1/authorize?redirect_uri=urn:ietf:wg:oauth:2.0:oob&client_id=107311880531.clients.hubrise.com&scope=location[orders.write,customer_list.write,catalog.read]

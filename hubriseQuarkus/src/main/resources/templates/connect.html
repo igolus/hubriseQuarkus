@@ -1,0 +1,131 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <form method="post" action="/connectHubriseAction">
+                <div class="form-group">
+                    <label for="keylocation">keylocation</label>
+                    <input type="text" class="form-control" id="keylocation" name="keylocation" placeholder="keylocation">
+                </div>
+                <div class="form-group">
+                    <label for="redirecturi">redirecturi</label>
+                    <input type="text" class="form-control" id="redirecturi" name="redirecturi" placeholder="redirecturi">
+                </div>
+                <div class="form-group">
+                    <label for="ordersScope">Orders scope</label>
+                    <select class="form-control" id="ordersScope" name="ordersScope">
+                        <option value="0">None</option>
+                        <option value="1">Read</option>
+                        <option value="2">Write</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerListScope">customer List scope</label>
+                    <select class="form-control" id="customerListScope" name="customerListScope">
+                        <option value="0">None</option>
+                        <option value="1">Read</option>
+                        <option value="2">Write</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerListScope">catalog scope</label>
+                    <select class="form-control" id="catalogScope" name="catalogScope">
+                        <option value="0">None</option>
+                        <option value="1">Read</option>
+                        <option value="2">Write</option>
+                    </select>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           name="order.create"
+                           type="checkbox"
+                           id="order.create">
+                    <label class="form-check-label" for="order.create">
+                        order.create
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           name="order.update"
+                           type="checkbox" id="order.update">
+                    <label class="form-check-label" for="order.update">
+                        order.update
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           name="customer.create"
+                           type="checkbox" id="customer.create">
+                    <label class="form-check-label" for="order.update">
+                        customer.create
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           name="customer.update"
+                           type="checkbox" id="customer.update">
+                    <label class="form-check-label" for="customer.update">
+                        customer.update
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           name="location.update"
+                           type="checkbox" id="location.update">
+                    <label class="form-check-label" for="location.update">
+                        location.update
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           name="catalog.create"
+                           type="checkbox"
+                           id="catalog.create">
+                    <label class="form-check-label" for="catalog.create">
+                        catalog.create
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           name="catalog.update"
+                           type="checkbox" id="catalog.update">
+                    <label class="form-check-label" for="catalog.update">
+                        catalog.update
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           name="inventory.patch"
+                           type="checkbox" id="inventory.patch">
+                    <label class="form-check-label" for="inventory.patch">
+                        inventory.patch
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           name="inventory.update"
+                           type="checkbox" id="inventory.update">
+                    <label class="form-check-label" for="inventory.update">
+                        inventory.update
+                    </label>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Connect</button>
+            </form>
+        </div>
+    </body>
+</html>
