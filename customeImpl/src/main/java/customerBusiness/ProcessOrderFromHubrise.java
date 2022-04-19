@@ -7,10 +7,15 @@ import hubriseModel.OrderStatus;
 import hubriseModel.RootCustomer;
 import hubriseModel.RootOrder;
 import util.ProcessOrderResponse;
+import org.jboss.logging.Logger;
 
+import javax.inject.Inject;
 import java.util.UUID;
 
 public class ProcessOrderFromHubrise {
+
+    @Inject
+    static Logger log;
 
     private static String orderSourceSample = "{\n" +
             "  \"status\": \"new\",\n" +
@@ -36,8 +41,7 @@ public class ProcessOrderFromHubrise {
             "}";
 
     public static ProcessOrderResponse processSystemNewOrder(String keyLocation, RootOrder newOrder) {
-        System.out.println("keyLocation = " + keyLocation);
-        System.out.println("comingOrder = " + newOrder);
+        log.info("processSystemNewOrder keyLocation = " + keyLocation);
         return new ProcessOrderResponse(
                 OrderStatus.RECEIVED.getValue(),
                 UUID.randomUUID().toString(),
@@ -46,29 +50,24 @@ public class ProcessOrderFromHubrise {
     }
 
     public static ProcessOrderResponse processSystemOrder(String keyLocation, RootOrder newOrder, RootOrder oldOrder) {
-        System.out.println("keyLocation = " + keyLocation);
-        System.out.println("comingOrder = " + newOrder);
+        log.info("processSystemOrder keyLocation = " + keyLocation);
         return null;
     }
 
     public static boolean processSystemNewCustomer(String keyLocation, RootCustomer newCustomer) {
-        //Code your business logic here
-        //insert the order in your system
-        System.out.println("keyLocation = " + keyLocation);
-        System.out.println("comingOrder = " + newCustomer);
+        log.info("processSystemNewCustomer keyLocation = " + keyLocation);
         return true;
     }
 
     public static boolean processSystemCustomer(String keyLocation, RootCustomer newCustomer, RootCustomer oldCustomer) {
         //Code your business logic here
         //insert the order in your system
-        System.out.println("keyLocation = " + keyLocation);
-        System.out.println("comingOrder = " + newCustomer);
+        log.info("processSystemCustomer keyLocation = " + keyLocation);
         return true;
     }
 
     public static RootOrder buildOrderFromPrivateRef(String privateRef) throws JsonProcessingException {
-        System.out.println("privateRef = " + privateRef);
+        log.info("buildOrderFromPrivateRef privateRef = " + privateRef);
         ObjectMapper objectMapper = new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 

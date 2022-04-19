@@ -10,6 +10,7 @@ import com.latoquemagique.util.HubriseClientUtil;
 import hubriseModel.RootCallBack;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -27,6 +28,9 @@ public class RegisterHubriseCallBack {
     @Inject
     Template redirect;
 
+    @Inject
+    Logger log;
+
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Transactional
@@ -41,7 +45,7 @@ public class RegisterHubriseCallBack {
         String decodedRedirect =  new String(Base64.getDecoder().decode(redirectUrl));
 
         try {
-
+            log.info("Register call back");
             String decodedCallBackConfig =  new String(Base64.getDecoder().decode(callBackConfig));
             ObjectMapper mapper = new ObjectMapper();
             CallBackConfig callBackConfigObj = mapper.readValue(decodedCallBackConfig, CallBackConfig.class);
@@ -59,9 +63,7 @@ public class RegisterHubriseCallBack {
             RootCallBack rootCallBack = HubriseClientUtil.getInstance()
                     .registerCallBack(authResponse.getAccess_token(), baseUriLocal, keylocation, callBackConfigObj);
 
-
-
-            System.out.println("rootCallBack = " + rootCallBack);
+            //System.out.println("rootCallBack = " + rootCallBack);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

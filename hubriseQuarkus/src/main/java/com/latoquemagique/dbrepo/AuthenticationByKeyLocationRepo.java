@@ -9,6 +9,10 @@ import java.util.Base64;
 @ApplicationScoped
 public class AuthenticationByKeyLocationRepo implements PanacheRepository<AuthenticationByKeyLocation> {
     public AuthenticationByKeyLocation findByKeyLocation(String keyLocation) {
+        return find("keyLocation", keyLocation).firstResult();
+    }
+
+    public AuthenticationByKeyLocation findByKeyLocationEncoded(String keyLocation) {
         String base64Key = Base64.getEncoder().encodeToString(keyLocation.getBytes());
         return find("keyLocation", base64Key).firstResult();
     }

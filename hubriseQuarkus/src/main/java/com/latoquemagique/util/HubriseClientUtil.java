@@ -10,6 +10,7 @@ import hubriseModel.Events;
 import hubriseModel.RootCallBack;
 import hubriseModel.RootOrder;
 import org.eclipse.microprofile.config.ConfigProvider;
+import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
@@ -26,6 +27,8 @@ public class HubriseClientUtil {
     private static final HubriseClientUtil instance = new HubriseClientUtil();
     public static final String X_ACCESS_TOKEN = "X-Access-Token";
 
+
+    Logger log = Logger.getLogger(HubriseClientUtil.class);
 
     private Client client =
             ClientBuilder
@@ -73,6 +76,7 @@ public class HubriseClientUtil {
     }
 
     public RootOrder updateOrderAfterProcess(RootOrder order, String keylocation) throws JsonProcessingException {
+        log.info("Updating order in hubrise order:" + order.getId() + " keyLocation: keylocation");
         StringBuilder urlBuilder = new StringBuilder(BASE_API_URL);
         urlBuilder
                 .append("v1/location/orders/" + order.getId());
@@ -97,7 +101,7 @@ public class HubriseClientUtil {
                 .header(X_ACCESS_TOKEN, authToken)
                 .method("PATCH", javax.ws.rs.client.Entity.json(jsonorderPatch));
 
-        System.out.println("resp = " + resp);
+        //System.out.println("resp = " + resp);
         RootOrder response = resp.readEntity(RootOrder.class);
         return response;
     }

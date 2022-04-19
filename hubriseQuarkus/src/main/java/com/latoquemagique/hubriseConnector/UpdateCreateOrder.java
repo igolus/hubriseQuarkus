@@ -6,10 +6,8 @@ import com.latoquemagique.dbrepo.AuthenticationByKeyLocationRepo;
 import com.latoquemagique.dbrepo.PrivateRefHuriseIdRepo;
 import com.latoquemagique.util.HubriseClientUtil;
 import customerBusiness.ProcessOrderFromHubrise;
-import hubriseModel.RootCallBack;
 import hubriseModel.RootOrder;
 import org.jboss.logging.Logger;
-import util.ProcessOrderResponse;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -44,7 +42,7 @@ public class UpdateCreateOrder {
                 AuthenticationByKeyLocationRepo authenticationByKeyLocationRepoInstance =
                         new AuthenticationByKeyLocationRepo();
                 AuthenticationByKeyLocation authenticationByKeyLocation
-                        = authenticationByKeyLocationRepoInstance.findByKeyLocation(keyLocation);
+                        = authenticationByKeyLocationRepoInstance.findByKeyLocationEncoded(keyLocation);
                 if (authenticationByKeyLocation != null) {
                     String token = authenticationByKeyLocation.getAuthentication().getAccess_token();
                     RootOrder orderCreated = HubriseClientUtil.getInstance().createOrder(token, rootOrder);

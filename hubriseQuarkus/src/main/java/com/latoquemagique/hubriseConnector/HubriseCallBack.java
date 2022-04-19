@@ -39,13 +39,15 @@ public class HubriseCallBack {
     @Transactional
     @Path("{keylocation}")
     public Response add(@PathParam("keylocation") String keylocation, String callBackString) {
-        System.out.println(callBackString);
+        log.info("Receiving a callBack order callback");
+        //System.out.println(callBackString);
         ObjectMapper objectMapper = new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
             String decodedKeylocation =  new String(Base64.getDecoder().decode(keylocation));
             CallBackBaseRoot callBackBaseRoot = objectMapper.readValue(callBackString, CallBackBaseRoot.class);
             if (callBackBaseRoot.getResource_type().equals(ORDER_RESOURCE)) {
+                log.info("Processing order callback");
                 CallBackOrderRoot callBackOrderRoot = objectMapper.readValue(callBackString, CallBackOrderRoot.class);
                 ProcessOrderResponse processOrderResponse = null;
                 if (callBackOrderRoot.getPrevious_state() != null) {
@@ -59,7 +61,7 @@ public class HubriseCallBack {
                                     decodedKeylocation, callBackOrderRoot.getNew_state());
                 }
 
-                System.out.println(callBackOrderRoot);
+                //System.out.println(callBackOrderRoot);
                 if (processOrderResponse != null) {
                     ackOrder(processOrderResponse, callBackOrderRoot.getNew_state(), keylocation);
                     return Response.ok().build();
@@ -69,6 +71,7 @@ public class HubriseCallBack {
                 }
             }
             else if (callBackBaseRoot.getResource_type().equals(CUSTOMER_RESOURCE)) {
+                log.info("Processing order callback");
                 CallBackCustomerRoot callBackOrderRoot = objectMapper.readValue(callBackString, CallBackCustomerRoot.class);
                 boolean result;
                 if (callBackOrderRoot.getPrevious_state() != null) {
@@ -79,7 +82,7 @@ public class HubriseCallBack {
                     result = ProcessOrderFromHubrise.processSystemNewCustomer(
                             decodedKeylocation, callBackOrderRoot.getNew_state());
                 }
-                System.out.println(callBackOrderRoot);
+
                 if (result) {
                     return Response.ok().build();
                 }

@@ -59,6 +59,8 @@ public class ConnectHubriseAction {
 
             )
     {
+
+        log.info("Registering connection !!");
         CallBackConfig callBackConfig = new CallBackConfig();
 
         callBackConfig.setOrder_create(order_create != null);
@@ -79,7 +81,7 @@ public class ConnectHubriseAction {
 
         var requestUri = uriInfo.getRequestUri();
         String baseUriLocal = requestUri.getAuthority();
-        System.out.println(keylocation);
+        //System.out.println(keylocation);
 
         StringBuilder urlBuiler = new StringBuilder("https://manager.hubrise.com/oauth2/v1/authorize?");
         try {
