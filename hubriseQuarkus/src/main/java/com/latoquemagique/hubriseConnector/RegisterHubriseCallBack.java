@@ -27,10 +27,6 @@ public class RegisterHubriseCallBack {
     @Inject
     Template redirect;
 
-    @Inject
-    AuthenticationByKeyLocationRepo authenticationByKeyLocationRepo;
-
-
     @GET
     @Produces(MediaType.TEXT_HTML)
     @Transactional
@@ -54,11 +50,8 @@ public class RegisterHubriseCallBack {
             AuthenticationByKeyLocation item = new AuthenticationByKeyLocation();
             item.setKeyLocation(keylocation);
             item.setAuthentication(authResponse);
-            //item.authentication = authResponse;
             authResponse.persist();
-            //saveAuthentication(item);
             item.persist();
-            //ConfManager.setMappingConfig(keylocation, authResponse);
 
             var requestUri = uriInfo.getRequestUri();
             String baseUriLocal = "https://" + requestUri.getAuthority();
@@ -75,11 +68,5 @@ public class RegisterHubriseCallBack {
 
 
         return redirect.data("redirectUrl", decodedRedirect);
-        //return Response.ok().build();
-    }
-
-    @Transactional
-    public void saveAuthentication(AuthenticationByKeyLocation item) {
-        item.persist();
     }
 }

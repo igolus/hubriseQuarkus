@@ -6,6 +6,7 @@
   "scripts": {
     "startQuarkus": "cd hubriseQuarkus && quarkus dev",
     "connectHubriseBrowser": "lt -p 8080",
+    "startRunner": "java -jar hubriseQuarkus/target/quarkus-app/quarkus-run.jar",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

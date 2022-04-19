@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
+import com.latoquemagique.dbmodel.PrivateRefHubriseId;
 import com.latoquemagique.util.ConfManager;
 import com.latoquemagique.util.HubriseClientUtil;
 import customerBusiness.ProcessOrderFromHubrise;
@@ -34,6 +36,7 @@ public class HubriseCallBack {
     public static final String CUSTOMER_RESOURCE = "customer";
 
     @POST
+    @Transactional
     @Path("{keylocation}")
     public Response add(@PathParam("keylocation") String keylocation, String callBackString) {
         System.out.println(callBackString);
@@ -100,6 +103,12 @@ public class HubriseCallBack {
         orderPatch.setConfirmed_time(newOrder.getConfirmed_time());
         orderPatch.setId(newOrder.getId());
         orderPatch.setPrivate_ref(processOrderResponse.getPrivate_ref());
+
+        PrivateRefHubriseId privateRefHubriseId = new PrivateRefHubriseId();
+        privateRefHubriseId.setPrivateRef(processOrderResponse.getPrivate_ref());
+        privateRefHubriseId.setHubRiseId(newOrder.getId());
+        privateRefHubriseId.setKeylocation(keyLocation);
+        privateRefHubriseId.persist();
 
         HubriseClientUtil.getInstance().updateOrderAfterProcess(orderPatch, keyLocation);
     }

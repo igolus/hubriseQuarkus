@@ -26,25 +26,11 @@ public class HubriseClientUtil {
     private static final HubriseClientUtil instance = new HubriseClientUtil();
     public static final String X_ACCESS_TOKEN = "X-Access-Token";
 
-//    private JacksonJsonProvider jackson_json_provider = new JacksonJaxbJsonProvider()
-//            .configure(JsonParser.Feature.IGNORE_UNDEFINED, true);
-//            .configure()
-//            .configure(DeserializationConfig.  FAIL_ON_UNKNOWN_PROPERTIES, false)
-//            .configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
-
-//    private ObjectMapper object_mapper = jackson_json_provider.locateMapper(
-//            Object.class, MediaType.APPLICATION_JSON_TYPE);
-
 
     private Client client =
             ClientBuilder
             .newClient();
-//            .register(jackson_json_provider);
-//
-//    ClientWebTarget target = new ClientWebTarget(client, configuration);
 
-    @Inject
-    AuthenticationByKeyLocationRepo authenticationByKeyLocationRepo;
 
     private HubriseClientUtil() {
     }
@@ -58,6 +44,7 @@ public class HubriseClientUtil {
     String country = ConfigProvider.getConfig().getValue("hubrise.country", String.class);
     String account_name = ConfigProvider.getConfig().getValue("hubrise.account_name", String.class);
     String client_secret= ConfigProvider.getConfig().getValue("hubrise.client_secret", String.class);
+    final ObjectMapper objectMapper = new ObjectMapper();
 
     public static final String BASE_URL = "https://manager.hubrise.com/";
     public static final String BASE_API_URL = "https://api.hubrise.com/";
@@ -102,9 +89,7 @@ public class HubriseClientUtil {
         orderPatch.setConfirmed_time(order.getConfirmed_time());
         orderPatch.setPrivate_ref(order.getPrivate_ref());
 
-        final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        String jsonorderPatch = objectMapper.writeValueAsString(orderPatch);
+        String jsonorderPatch = getFilteredJsonNoNull(orderPatch);
 
         Response resp = client
                 .target(urlBuilder.toString())
@@ -114,6 +99,31 @@ public class HubriseClientUtil {
 
         System.out.println("resp = " + resp);
         RootOrder response = resp.readEntity(RootOrder.class);
+        return response;
+    }
+
+    private String getFilteredJsonNoNull(RootOrder orderPatch) throws JsonProcessingException {
+
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        String jsonorderPatch = objectMapper.writeValueAsString(orderPatch);
+        return jsonorderPatch;
+    }
+
+    public RootOrder createOrder(String authToken,
+                                         RootOrder orderToCreate) throws JsonProcessingException {
+        StringBuilder urlBuilder = new StringBuilder(BASE_API_URL);
+        urlBuilder
+                .append("v1/location/orders");
+        String orderToCreateNotNull = getFilteredJsonNoNull(orderToCreate);
+
+        Response post = client
+                .target(urlBuilder.toString())
+                .request(MediaType.APPLICATION_JSON)
+                .header(X_ACCESS_TOKEN, authToken)
+                .post(javax.ws.rs.client.Entity.json(orderToCreateNotNull));
+
+        //return jsonorderPatch;
+        RootOrder response = post.readEntity(RootOrder.class);
         return response;
     }
 
