@@ -20,6 +20,20 @@ mvn quarkus:dev
 
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
 
+## Register HubRise callBack
+
+Use local tunnel: https://theboroer.github.io/localtunnel-www/
+
+ to expose your server on the net:
+
+```shell script
+lt -p 8080
+```
+
+The browse to your exposed service ex:
+
+https://witty-frog-31.loca.lt/connectHubrisePage
+
 ## Packaging and running the application
 
 The application can be packaged using:
