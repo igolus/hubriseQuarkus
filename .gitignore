@@ -24,7 +24,7 @@ bin/
 .mvn
 
 #db
-h2.mv.db
+.h2.mv.db
 
 # NetBeans
 nb-configuration.xml
