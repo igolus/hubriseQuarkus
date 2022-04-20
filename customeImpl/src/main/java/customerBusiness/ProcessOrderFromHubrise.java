@@ -42,6 +42,11 @@ public class ProcessOrderFromHubrise {
 
     public static ProcessOrderResponse processSystemNewOrder(String keyLocation, RootOrder newOrder) {
         log.info("processSystemNewOrder keyLocation = " + keyLocation);
+
+        //Insert the newOrder object inside your system
+        //.....
+        // Buid a ProcessOrderResponse as return value with
+        // The status, your private Id used to reference the order , the confirmed expected time.
         return new ProcessOrderResponse(
                 OrderStatus.RECEIVED.getValue(),
                 UUID.randomUUID().toString(),

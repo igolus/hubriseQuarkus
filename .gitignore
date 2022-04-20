@@ -20,6 +20,15 @@ bin/
 *.iml
 *.iws
 
+#mvn
+.mvn
+
+#db
+h2.mv.db
+hubriseQuarkus/h2.mv.db
+hubriseQuarkus/h2.trace.db
+hubriseQuarkus/h2db.mv.db
+
 # NetBeans
 nb-configuration.xml
 
