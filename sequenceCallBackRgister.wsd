@@ -1,0 +1,33 @@
+@startuml
+actor User as User
+participant Browser as Browser
+participant QuarkusHubRise as Quarkus
+participant HubRise as HR
+
+User -> Browser: GET connectHubrise page
+Browser -> Quarkus: GET
+Quarkus -> Browser: display formatted config form
+
+User -> Browser: POST form
+note over Browser: -Key location as POS key\n-Redirecturi (the page to display after the process)\nOrders scope\ncustomer List scope\ncatalog scope\List of event to listen
+
+Browser -> Quarkus
+Quarkus -> Quarkus: Build connection url
+note over Quarkus: Call back uri will redirect to QuarkusHubRise\n With\n-keyLocation\n-second redirectUrl\n-list of events to listen 
+Quarkus -> Browser: Redirect to authorize hub rise url
+Browser -> User: Display connection form
+
+User -> Browser: Select location
+Browser -> HR: select location form
+HR -> HR: Store location selected
+HR -> Browser: select catalog
+Browser -> User: Display Select catalog form
+User -> Browser: Select catalog
+Browser -> HR: Select catalog
+HR -> HR: Store catalog selected
+HR -> Quarkus: redirect to call back uri
+Quarkus -> Quarkus
+note over Quarkus: Gather\n-keyLocation\n-second redirectUrl\n-list of events to listen\n hubrise connection code
+Quarkus -> HR: Call auth2 entry point with connection code
+note over Quarkus: Client id and seccret are stored\n in a config file inside quarkus app
+@enduml

@@ -14,8 +14,7 @@ import java.util.UUID;
 
 public class ProcessOrderFromHubrise {
 
-    @Inject
-    static Logger log;
+    static Logger log  = Logger.getLogger(ProcessOrderFromHubrise.class);;
 
     private static String orderSourceSample = "{\n" +
             "  \"status\": \"new\",\n" +

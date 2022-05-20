@@ -1,0 +1,20 @@
+@startuml
+actor "External System" as User
+participant Browser as Browser
+participant QuarkusHubRise as Quarkus
+participant HubRise as HR
+participant "Cloud POS DB" as DB
+
+User -> HR: New order
+loop For each registered call back
+    HR -> HR: Trigger call back
+end
+HR -> Quarkus: Trigger quarkus call back
+Quarkus -> DB: FIll order in POS system
+DB -> Quarkus: Ok created (get the private ref)
+Quarkus->HR: Acknowledge Order (Status Created)
+Quarkus->HR: Update private ref in hubrise order
+Quarkus->Quarkus: Fill PrivateRefHubriseId Table
+note over Quarkus: -hubRiseId\n-privateRef\n-keylocation 
+
+@enduml

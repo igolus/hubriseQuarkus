@@ -16,9 +16,7 @@ import org.jboss.logging.Logger;
 import javax.inject.Inject;
 
 public class ConfManager {
-
-    @Inject
-    static Logger log;
+    private static Logger log = Logger.getLogger(ConfManager.class);
 
     public static final String CONF_FILE = "config.json";
     private static FileWriter file;
